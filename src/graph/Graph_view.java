@@ -27,11 +27,8 @@ public class Graph_view extends Frame implements ActionListener,WindowListener{
 	private Button button1 = new Button("BarChart");
 	private Button button2 = new Button("LineChart");
 
-	private EventObject e;
-	private JFreeChart chart;
-
 	
-	public Graph_view() {
+	public Graph_view(int a) {
 		addWindowListener(this);
 		setTitle("Graph");
 		setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -54,12 +51,20 @@ public class Graph_view extends Frame implements ActionListener,WindowListener{
 		add(button2);
 		button1.addActionListener(this);
 		button2.addActionListener(this);
-		
-		JFreeChart chart = 
+		if(a==0){
+
+			JFreeChart chart = 
 			      ChartFactory.createBarChart("Import Volume", "Year", "Ton",data, 
 			    		  						PlotOrientation.VERTICAL, true, false,false );
-		 ChartPanel cpanel = new ChartPanel(chart);
+		    ChartPanel cpanel = new ChartPanel(chart);
 		    add(cpanel, BorderLayout.CENTER);
+		}else if(a==1) {
+			JFreeChart chart = 
+				      ChartFactory.createLineChart("Import Volume", "Year", "Ton",data, 
+				    		  						PlotOrientation.VERTICAL, true, false,false );
+			    ChartPanel cpanel = new ChartPanel(chart);
+			    add(cpanel, BorderLayout.CENTER);
+		}
 
 		
 	}
@@ -112,25 +117,16 @@ public class Graph_view extends Frame implements ActionListener,WindowListener{
 		CategoryDataset data = null;
 		// TODO Auto-generated method stub	
 		if(e.getSource() == button1){
-			removeAll();
-			add(button1);
-			add(button2);
-			JFreeChart chart = 
-				      ChartFactory.createBarChart("Import Volume", "Year", "Ton",data, 
-				    		  						PlotOrientation.VERTICAL, true, false,false );
-			 ChartPanel cpanel = new ChartPanel(chart);
-			    add(cpanel, BorderLayout.CENTER);
-			
+			dispose();
+			Graph_view graph = new Graph_view(0);
+			graph.setBounds(5,5,655,455);
+			graph.setVisible(true);
 			
 	    }else if(e.getSource() == button2){
-	    	removeAll();
-	    	add(button1);
-			add(button2);
-	    	JFreeChart chart = 
-				      ChartFactory.createLineChart("Import Volume", "Year", "Ton",data, 
-				    		  						PlotOrientation.VERTICAL, true, false,false );
-			 ChartPanel cpanel = new ChartPanel(chart);
-			    add(cpanel, BorderLayout.CENTER);
+	    	dispose();
+			Graph_view graph = new Graph_view(1);
+			graph.setBounds(5,5,655,455);
+			graph.setVisible(true);
 	    	
 		}
 	
